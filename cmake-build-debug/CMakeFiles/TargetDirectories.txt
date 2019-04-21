@@ -1,0 +1,2 @@
+/home/liangzi/code/mycode/Control/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/liangzi/code/mycode/Control/cmake-build-debug/CMakeFiles/edit_cache.dir

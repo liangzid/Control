@@ -1,0 +1,9 @@
+/home/liangzi/download/clion-2018.3.4/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/liangzi/code/mycode/Control
+CMake Error at CMakeLists.txt:18 (ADD_EXECUTABLE):
+  The target name "src/ModenControl.cpp" is reserved or not valid for certain
+  CMake features, such as generator expressions, and may result in undefined
+  behavior.
+
+
+-- Configuring incomplete, errors occurred!
+See also "/home/liangzi/code/mycode/Control/cmake-build-debug/CMakeFiles/CMakeOutput.log".
