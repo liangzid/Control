@@ -9,7 +9,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1e68672c-5db0-4ab1-91ba-a6f9b325660e" name="Default Changelist" comment="" />
+    <list default="true" id="1e68672c-5db0-4ab1-91ba-a6f9b325660e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/ProcessingControl_WeChatProgramming/QianKui_ChuanJi.js" beforeDir="false" afterPath="$PROJECT_DIR$/ProcessingControl_WeChatProgramming/QianKui_ChuanJi.js" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,7 +29,9 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ProcessingControl_WeChatProgramming/QianKui_ChuanJi.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-360" />
+            <state relative-caret-position="-1742">
+              <caret line="177" column="35" selection-start-line="177" selection-start-column="35" selection-end-line="177" selection-end-column="35" />
+            </state>
           </provider>
         </entry>
       </file>
@@ -61,6 +65,7 @@
         <option value="$PROJECT_DIR$/main.cpp" />
         <option value="$PROJECT_DIR$/src/ModenControl.cpp" />
         <option value="$PROJECT_DIR$/include/ModenControl.h" />
+        <option value="$PROJECT_DIR$/ProcessingControl_WeChatProgramming/QianKui_ChuanJi.js" />
       </list>
     </option>
   </component>
@@ -123,6 +128,16 @@
       </list>
     </option>
   </component>
+  <component name="RunManager">
+    <configuration name="QianKui_ChuanJi.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="QianKui_ChuanJi.js" working-dir="$PROJECT_DIR$/ProcessingControl_WeChatProgramming">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.QianKui_ChuanJi.js" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -134,24 +149,24 @@
       <option name="presentableId" value="Default" />
       <updated>1553091317598</updated>
       <workItem from="1553091319648" duration="2400000" />
-      <workItem from="1556707996966" duration="238000" />
+      <workItem from="1556707996966" duration="2186000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2400000" />
+    <option name="totallyTimeSpent" value="4586000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1366" height="706" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24888226" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24888226" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.5311419" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -211,7 +226,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ProcessingControl_WeChatProgramming/QianKui_ChuanJi.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-360" />
+        <state relative-caret-position="-1742">
+          <caret line="177" column="35" selection-start-line="177" selection-start-column="35" selection-end-line="177" selection-end-column="35" />
+        </state>
       </provider>
     </entry>
   </component>

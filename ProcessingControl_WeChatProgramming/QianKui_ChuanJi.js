@@ -40,9 +40,9 @@
     OutputOfControlPI1=new Float64Array(setValue.length);
     OutputOfControlPI2=new Float64Array(setValue.length);
     OutputOfWo1=new Float64Array(setValue.length);
-    OutputOfWo2=new Float64Array(setvalue.length);
+    OutputOfWo2=new Float64Array(setValue.length);
     OutputOfWf1=new Float64Array(setValue.length);
-    OutputOfWf2=new Float64Array(setvalue.length);
+    OutputOfWf2=new Float64Array(setValue.length);
     mainOutput=new Float64Array(setValue.length);
     subOutput =new Float64Array(mainOutput.length);
     QianKuiForinterfere1=new Float64Array(setValue.length);
@@ -56,7 +56,7 @@
     var error2=0;
 
     //模拟整个回路的状态
-    for(i=0;i<setvalue.length;i++)
+    for(i=0;i<setValue.length;i++)
     {
         //主回路控制器输出
         if(i-1<0)
@@ -65,7 +65,7 @@
         }
         else
         {
-            OutputOfControlPI1[i]=Kp1*(setvalue[i-1]-mainOutput[i-1])+Ki1*error1;
+            OutputOfControlPI1[i]=Kp1*(setValue[i-1]-mainOutput[i-1])+Ki1*error1;
         }
         //计算前馈补偿项
         /*********************************************************************
@@ -83,7 +83,7 @@
         }
         *******************************************************************/
         //计算前馈补偿
-        taoQianKui=floor(timeDelayOfQianKui/T);
+        taoQianKui=~~(timeDelayOfQianKui/T);
         if(i-1-taoQianKui<0)
         {
             if(i==taoQianKui)
@@ -115,12 +115,12 @@
             +Ki2*error2;
         }
         //计算副回路输出值(分为两部分:控制器作用于被控对象结果+干扰项)
-        taowo1=timeDelayOfWo1/T;
+        taowo1=~~(timeDelayOfWo1/T);
         if(i<1+taowo1)
         {
             if(i>=taowo1)
             {
-                OutputOfWo1[i]=1/(1+2*TYOfWo1/T)*(Kofwo1*(OutputOfControlPI2[i-taowo1]));
+                OutputOfWo1[i]=1/(1+2*TYOfWo1/T)*(KOfWo1*(OutputOfControlPI2[i-taowo1]));
             }
             else
             {
@@ -135,7 +135,7 @@
             
         }
 
-        taowf1=timeDelayOfWf1/T;
+        taowf1=~~(timeDelayOfWf1/T);
         if(i<1+taowf1)
         {
             if(i>=taowf1)
@@ -155,12 +155,12 @@
 
         subOutput[i]=OutputOfWo1[i]+OutputOfWf1[i];
         //计算主回路的输出值
-        taowo2=timeDelayOfWo2/T;
+        taowo2=~~(timeDelayOfWo2/T);
         if(i<1+taowo2)
         {
             if(i>=taowo2)
             {
-                OutputOfWo2[i]=1/(1+2*TYOfWo2/T)*(Kofwo2*(subOutput[i-taowo2]));
+                OutputOfWo2[i]=1/(1+2*TYOfWo2/T)*(KOfWo2*(subOutput[i-taowo2]));
             }
             else
             {
@@ -175,7 +175,7 @@
             
         }
 
-        taowf2=timeDelayOfWf2/T;
+        taowf2=~~(timeDelayOfWf2/T);
         if(i<1+taowf2)
         {
             if(i>=taowf2)
@@ -219,7 +219,7 @@
 
     //将数据进行输出
     liangzi=new DataFormer(generate_RangeSeries(runningTime,T),mainOutput,subOutput,
-    OutputOfControlPI1,OutputOfControlPI2,OutputOfWf1,outputofwf2);
+    OutputOfControlPI1,OutputOfControlPI2,OutputOfWf1,OutputOfWf2);
     
     return liangzi;
 }
@@ -259,5 +259,47 @@ function DataFormer(timeSeries,mainOutput,subOutput,OutputOfControlPI1,OutputOfC
     this.OutputOfControlPI2=OutputOfControlPI2;
     
     this.OutputOfWf1=OutputOfWf1;
-    this.OutputOfWf2=outputofwf2;  
+    this.OutputOfWf2=OutputOfWf2;
 };
+
+//主函数部分
+setpoint=1.0;
+Kp1=2.17;
+Ki1=0.015585;
+TYOfWQianKui=0;
+TXOfWQianKui=0;
+KOfQianKui=5;
+timeDelayOfQianKui=0;
+Kp2=0.369;
+Ki2=0;
+TYOfWo1=30;
+KOfWo1=1;
+timeDelayOfWo1=0;
+
+TYOfWf1=0;
+KOfWf1=0;
+timeDelayOfWf1=0;
+
+TYOfWo2=100;
+KOfWo2=1;
+timeDelayOfWo2=30;
+
+TYOfWf2=0;
+KOfWf2=0;
+timeDelayOfWf2=0;
+
+runningTime=500;
+isUseModelingInaccurate=0;
+
+interfere1=new Array(runningTime/0.01);
+interfere2=new Array(interfere1.length);
+
+interfere1=initArray(interfere1,1);
+interfere2=initArray(interfere2,1);
+
+liangzi=qianKui_ChuanJi(setpoint,Kp1,Ki1,TYOfWQianKui,TXOfWQianKui,KOfQianKui,timeDelayOfQianKui,
+    Kp2,Ki2,TYOfWo1,KOfWo1,timeDelayOfWo1,interfere1,TYOfWf1,KOfWf1,timeDelayOfWf1,TYOfWo2,KOfWo2,
+    timeDelayOfWo2,interfere2,TYOfWf2,KOfWf2,timeDelayOfWf2,runningTime,isUseModelingInaccurate);
+
+
+
