@@ -36,20 +36,21 @@
     var T=0.01;//采样时间,这个就默认吧.
     
     //输入输出与状态变量初始化
-    setValue=new Float64Array(runningTime/T);
+    setValue  =initArray(runningTime/T,setpoint);//用给定值来初始化输入
+    //setValue=new Float64Array(runningTime/T);
     OutputOfControlPI1=new Float64Array(setValue.length);
     OutputOfControlPI2=new Float64Array(setValue.length);
     OutputOfWo1=new Float64Array(setValue.length);
     OutputOfWo2=new Float64Array(setValue.length);
     OutputOfWf1=new Float64Array(setValue.length);
     OutputOfWf2=new Float64Array(setValue.length);
-    mainOutput=new Float64Array(setValue.length);
-    subOutput =new Float64Array(mainOutput.length);
+    //mainOutput=new Float64Array(setValue.length);
+    //subOutput =new Float64Array(mainOutput.length);
     QianKuiForinterfere1=new Float64Array(setValue.length);
 
-    setValue  =initArray(setValue,setpoint);//用给定值来初始化输入
-    mainOutput=initArray(mainOutput,0.00);
-    subOutput =initArray(subOutput,0.00);
+
+    mainOutput=initArray(setValue.length,0.00);
+    subOutput =initArray(setValue.length,0.00);
 
     //初始化控制器中的两个积分项的偏差值
     var error1=0;
@@ -65,8 +66,14 @@
         }
         else
         {
+            //console.log(mainOutput[i-1]);
             OutputOfControlPI1[i]=Kp1*(setValue[i-1]-mainOutput[i-1])+Ki1*error1;
         }
+
+        //输出控制信号一直以来的变化;
+
+        //console.log('输出信号PI1为:'+OutputOfControlPI1[i]);
+
         //计算前馈补偿项
         /*********************************************************************
          * ===========这一部分是完全准确时的补偿,如果需要自定义时可以使用============ * 
@@ -84,12 +91,13 @@
         *******************************************************************/
         //计算前馈补偿
         taoQianKui=~~(timeDelayOfQianKui/T);
+        console.log("taoqiankui:"+taoQianKui);
         if(i-1-taoQianKui<0)
         {
             if(i==taoQianKui)
             {
-                QianKuiForinterfere1[i]=-KOfQianKui/(1+2*TXOfWQianKui[0]/T)*
-                ((1+2*TYOfWQianKui[0]/T)*interfere1[i-taoQianKui]);
+                QianKuiForinterfere1[i]=-KOfQianKui/(1+2*TXOfWQianKui/T)*
+                ((1+2*TYOfWQianKui/T)*interfere1[i-taoQianKui]);
             }
             else
             {
@@ -98,11 +106,18 @@
         }
         else if(i-1-taoQianKui>=0)
         {
-            QianKuiForinterfere1[i]=-KOfQianKui/(1+2*TXOfWQianKui[0]/T)*
-            ((1+2*TYOfWQianKui[0]/T)*interfere1[i-taoQianKui]
+            console.log(-(1-2*TXOfWQianKui/T)*QianKuiForinterfere1[i-1-taoQianKui]
+                );
+
+            QianKuiForinterfere1[i]=(KOfQianKui/(1+(2*TXOfWQianKui/T)))*
+            ((1+2*TYOfWQianKui/T)*interfere1[i-taoQianKui]
             +(1-2*TYOfWQianKui/T)*interfere1[i-1-taoQianKui]
             -(1-2*TXOfWQianKui/T)*QianKuiForinterfere1[i-1-taoQianKui]);
         }
+
+        //console.log("----------:"+KOfQianKui+TXOfWQianKui+TYOfWQianKui);
+        console.log("interfere1:"+interfere1[i]);
+        console.log("qiankuiforinterfere1:"+QianKuiForinterfere1[i]);
 
         //副回路控制器输出
         if(i-1<0)
@@ -114,6 +129,12 @@
             OutputOfControlPI2[i]=Kp2*(OutputOfControlPI1[i-1]+QianKuiForinterfere1[i-1]-subOutput[i-1])
             +Ki2*error2;
         }
+        console.log("=====outputofcontrolpi1:"+OutputOfControlPI1[i]);
+
+
+
+
+
         //计算副回路输出值(分为两部分:控制器作用于被控对象结果+干扰项)
         taowo1=~~(timeDelayOfWo1/T);
         if(i<1+taowo1)
@@ -134,6 +155,10 @@
             -(1-2*TYOfWo1/T)*OutputOfWo1[i-1-taowo1]);
             
         }
+        console.log("outputofcontrolpi2:"+OutputOfControlPI2[i]);
+        //console.log("outputofwo1:"+OutputOfWo1);
+
+
 
         taowf1=~~(timeDelayOfWf1/T);
         if(i<1+taowf1)
@@ -153,9 +178,16 @@
             -(1-2*TYOfWf1/T)*OutputOfWf1[i-1-taowf1]);
         }
 
+        console.log("outputofwo1:"+OutputOfWo1[i]);
+        console.log("outputofwf1:"+OutputOfWf1[i]);
+
+
         subOutput[i]=OutputOfWo1[i]+OutputOfWf1[i];
+
+        console.log("suboutput:"+subOutput[i]);
         //计算主回路的输出值
         taowo2=~~(timeDelayOfWo2/T);
+        console.log("taowo2:"+taowo2);
         if(i<1+taowo2)
         {
             if(i>=taowo2)
@@ -176,24 +208,32 @@
         }
 
         taowf2=~~(timeDelayOfWf2/T);
+        //console.log("taowf2:"+taowf2);
         if(i<1+taowf2)
         {
             if(i>=taowf2)
             {
+                //console.log("interfere2:"+interfere2[i])
                 OutputOfWf2[i]=1/(1+2*TYOfWf2/T)*(KOfWf2*(interfere2[i-taowf2]));
             }
             else
             {
+                //console.log("hahahahahahhahahahaaaaaaaaaaaaaaaaaa");
                 OutputOfWf2[i]=0;
             }
         }
         else
         {
+
+
             OutputOfWf2[i]=1/(1+2*TYOfWf2/T)*(KOfWf2*(interfere2[i]+interfere2[i-1-taowf2])
             -(1-2*TYOfWf2/T)*OutputOfWf2[i-1-taowf2]);
         }
 
+        console.log('Outputofwo2:'+OutputOfWo2[i]);
+        //console.log('outputofwf2:'+OutputOfWf2[i]);
         mainOutput[i]=OutputOfWo2[i]+OutputOfWf2[i];
+        console.log("mainoutput:"+mainOutput[i]);
 //-------------------------------------------------------------------------------------------------        
         /* 没有考虑时滞,暂时废弃
         if(i-1<0)
@@ -221,16 +261,18 @@
     liangzi=new DataFormer(generate_RangeSeries(runningTime,T),mainOutput,subOutput,
     OutputOfControlPI1,OutputOfControlPI2,OutputOfWf1,OutputOfWf2);
     
-    return liangzi;
+    //return liangzi;
+    return OutputOfControlPI1;
 }
 
 
 /*对数组进行初始化,返回该数组的函数*/
-function initArray(array,value)
+function initArray(lens,value)
 {
-    for (everyValue in array)
+    array=new Array(lens);
+    for (i=0;i<lens;i++)
     {
-        everyValue=value;
+        array[i]=value;
     }
     return array;
 }
@@ -282,24 +324,25 @@ timeDelayOfWf1=0;
 
 TYOfWo2=100;
 KOfWo2=1;
-timeDelayOfWo2=30;
+timeDelayOfWo2=0;
 
 TYOfWf2=0;
 KOfWf2=0;
 timeDelayOfWf2=0;
 
-runningTime=500;
+runningTime=5;
 isUseModelingInaccurate=0;
+T=0.01
 
-interfere1=new Array(runningTime/0.01);
-interfere2=new Array(interfere1.length);
+interfere1=initArray(runningTime/T,1);
+interfere2=initArray(interfere1.length,1);
+//console.log(interfere1[0]);
 
-interfere1=initArray(interfere1,1);
-interfere2=initArray(interfere2,1);
-
+isUseModelingInaccurat=0;
 liangzi=qianKui_ChuanJi(setpoint,Kp1,Ki1,TYOfWQianKui,TXOfWQianKui,KOfQianKui,timeDelayOfQianKui,
     Kp2,Ki2,TYOfWo1,KOfWo1,timeDelayOfWo1,interfere1,TYOfWf1,KOfWf1,timeDelayOfWf1,TYOfWo2,KOfWo2,
-    timeDelayOfWo2,interfere2,TYOfWf2,KOfWf2,timeDelayOfWf2,runningTime,isUseModelingInaccurate);
+    timeDelayOfWo2,interfere2,TYOfWf2,KOfWf2,timeDelayOfWf2,runningTime,isUseModelingInaccurat);
 
+//liangzi2="...";
 
-
+//console.log(liangzi.mainOutput)
