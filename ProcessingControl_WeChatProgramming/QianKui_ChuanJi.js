@@ -36,28 +36,28 @@
     var T=0.01;//采样时间,这个就默认吧.
     
     //输入输出与状态变量初始化
-    setValue  =initArray(runningTime/T,setpoint);//用给定值来初始化输入
+    var setValue  =initArray(runningTime/T,setpoint);//用给定值来初始化输入
     //setValue=new Float64Array(runningTime/T);
-    OutputOfControlPI1=new Float64Array(setValue.length);
-    OutputOfControlPI2=new Float64Array(setValue.length);
-    OutputOfWo1=new Float64Array(setValue.length);
-    OutputOfWo2=new Float64Array(setValue.length);
-    OutputOfWf1=new Float64Array(setValue.length);
-    OutputOfWf2=new Float64Array(setValue.length);
+    var OutputOfControlPI1=new Float64Array(setValue.length);
+    var OutputOfControlPI2=new Float64Array(setValue.length);
+    var OutputOfWo1=new Float64Array(setValue.length);
+    var OutputOfWo2=new Float64Array(setValue.length);
+    var OutputOfWf1=new Float64Array(setValue.length);
+    var OutputOfWf2=new Float64Array(setValue.length);
     //mainOutput=new Float64Array(setValue.length);
     //subOutput =new Float64Array(mainOutput.length);
-    QianKuiForinterfere1=new Float64Array(setValue.length);
+    var QianKuiForinterfere1=new Float64Array(setValue.length);
 
 
-    mainOutput=initArray(setValue.length,0.00);
-    subOutput =initArray(setValue.length,0.00);
+    var mainOutput=initArray(setValue.length,0.00);
+    var subOutput =initArray(setValue.length,0.00);
 
     //初始化控制器中的两个积分项的偏差值
     var error1=0;
     var error2=0;
 
     //模拟整个回路的状态
-    for(i=0;i<setValue.length;i++)
+    for(var i=0;i<setValue.length;i++)
     {
         //主回路控制器输出
         if(i-1<0)
@@ -90,7 +90,7 @@
         }
         *******************************************************************/
         //计算前馈补偿
-        taoQianKui=~~(timeDelayOfQianKui/T);
+        var taoQianKui=~~(timeDelayOfQianKui/T);
         console.log("taoqiankui:"+taoQianKui);
         if(i-1-taoQianKui<0)
         {
@@ -136,7 +136,7 @@
 
 
         //计算副回路输出值(分为两部分:控制器作用于被控对象结果+干扰项)
-        taowo1=~~(timeDelayOfWo1/T);
+        var taowo1=~~(timeDelayOfWo1/T);
         if(i<1+taowo1)
         {
             if(i>=taowo1)
@@ -160,7 +160,7 @@
 
 
 
-        taowf1=~~(timeDelayOfWf1/T);
+        var taowf1=~~(timeDelayOfWf1/T);
         if(i<1+taowf1)
         {
             if(i>=taowf1)
@@ -186,7 +186,7 @@
 
         console.log("suboutput:"+subOutput[i]);
         //计算主回路的输出值
-        taowo2=~~(timeDelayOfWo2/T);
+        var taowo2=~~(timeDelayOfWo2/T);
         console.log("taowo2:"+taowo2);
         if(i<1+taowo2)
         {
@@ -207,7 +207,7 @@
             
         }
 
-        taowf2=~~(timeDelayOfWf2/T);
+        var taowf2=~~(timeDelayOfWf2/T);
         //console.log("taowf2:"+taowf2);
         if(i<1+taowf2)
         {
@@ -261,8 +261,8 @@
     liangzi=new DataFormer(generate_RangeSeries(runningTime,T),mainOutput,subOutput,
     OutputOfControlPI1,OutputOfControlPI2,OutputOfWf1,OutputOfWf2);
     
-    //return liangzi;
-    return OutputOfControlPI1;
+    return liangzi;
+    //return OutputOfControlPI1;
 }
 
 
@@ -305,40 +305,40 @@ function DataFormer(timeSeries,mainOutput,subOutput,OutputOfControlPI1,OutputOfC
 };
 
 //主函数部分
-setpoint=1.0;
-Kp1=2.17;
-Ki1=0.015585;
-TYOfWQianKui=0;
-TXOfWQianKui=0;
-KOfQianKui=5;
-timeDelayOfQianKui=0;
-Kp2=0.369;
-Ki2=0;
-TYOfWo1=30;
-KOfWo1=1;
-timeDelayOfWo1=0;
+var setpoint=1.0;
+var Kp1=2.17;
+var Ki1=0.015585;
+var TYOfWQianKui=0;
+var TXOfWQianKui=0;
+var KOfQianKui=5;
+var timeDelayOfQianKui=0;
+var Kp2=0.369;
+var Ki2=0;
+var TYOfWo1=30;
+var KOfWo1=1;
+var timeDelayOfWo1=0;
 
-TYOfWf1=0;
-KOfWf1=0;
-timeDelayOfWf1=0;
+var TYOfWf1=0;
+var KOfWf1=0;
+var timeDelayOfWf1=0;
 
-TYOfWo2=100;
-KOfWo2=1;
-timeDelayOfWo2=0;
+var TYOfWo2=100;
+var KOfWo2=1;
+var timeDelayOfWo2=0;
 
-TYOfWf2=0;
-KOfWf2=0;
-timeDelayOfWf2=0;
+var TYOfWf2=0;
+var KOfWf2=0;
+var timeDelayOfWf2=0;
 
-runningTime=5;
-isUseModelingInaccurate=0;
-T=0.01
+var runningTime=5;
+var isUseModelingInaccurate=0;
+var T=0.01
 
-interfere1=initArray(runningTime/T,1);
-interfere2=initArray(interfere1.length,1);
+var interfere1=initArray(runningTime/T,1);
+var interfere2=initArray(interfere1.length,1);
 //console.log(interfere1[0]);
 
-isUseModelingInaccurat=0;
+var isUseModelingInaccurat=0;
 liangzi=qianKui_ChuanJi(setpoint,Kp1,Ki1,TYOfWQianKui,TXOfWQianKui,KOfQianKui,timeDelayOfQianKui,
     Kp2,Ki2,TYOfWo1,KOfWo1,timeDelayOfWo1,interfere1,TYOfWf1,KOfWf1,timeDelayOfWf1,TYOfWo2,KOfWo2,
     timeDelayOfWo2,interfere2,TYOfWf2,KOfWf2,timeDelayOfWf2,runningTime,isUseModelingInaccurat);
@@ -346,3 +346,7 @@ liangzi=qianKui_ChuanJi(setpoint,Kp1,Ki1,TYOfWQianKui,TXOfWQianKui,KOfQianKui,ti
 //liangzi2="...";
 
 //console.log(liangzi.mainOutput)
+
+var fs = require('fs');
+let str=JSON.stringify(liangzi,"","\t");
+fs.writeFile('data.json',str);

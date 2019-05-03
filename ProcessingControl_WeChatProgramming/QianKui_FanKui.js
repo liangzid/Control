@@ -1,204 +1,102 @@
-function qianKui_ChuanJi(setpoint,Kp,Ki,TYOfWQianKui,TXOfWQianKui,KOfQianKui,timeDelayOfQianKui,
-    TOfWo,KOfWo,timeDelayOfWo,interfere,TOfWf,KOfWf,timeDelayOfWf,runningTime,isUseModelingInaccurate)
-{
-    //超参设置
-    var T=0.01;//采样时间,这个就默认吧.
-    
-    //输入输出与状态变量初始化
-    setValue=new Float64Array(runningTime/T);
-    OutputOfControlPI=new Float64Array(setValue.length);
-    OutputOfWo=new Float64Array(setValue.length);
-    OutputOfWf=new Float64Array(setValue.length);
-    mainOutput=new Float64Array(setValue.length);
-    QianKuiForinterfere=new Float64Array(setValue.length);
+function qiankui_FanKui(setpoint,kp,ki,TofWo,KofWo,timeDelayofWo,interfere,TofWf,KofWf,timeDelayofWf,runningTime) {
 
-    setValue  =initArray(setValue,setpoint);//用给定值来初始化输入
-    mainOutput=initArray(mainOutput,0.00);
-    subOutput =initArray(subOutput,0.00);
+    var T=0.01;
 
-    //初始化控制器中的两个积分项的偏差值
+    var setValue=new initArray(runningTime/T,setpoint);
+    var mainoutput=new initArray(setValue.length,0);
+    var outputofPI=new initArray(setValue.length,0);
+    var outputofWf=new initArray(setValue.length,0);
+    var inputofWo=new initArray(setValue.length,0);
+
     var error=0;
 
-    //模拟整个回路的状态
-    for(i=0;i<setValue.length;i++)
+    for(var i=0;i<runningTime/T;i++)
     {
-        //主回路控制器输出
-        if(i-1<0)
+        //计算控制器输出
+        if(i==0)
         {
-            OutputOfControlPI[i]=0;
+            outputofPI[i]=0;
         }
         else
         {
-            OutputOfControlPI[i]=Kp*(setValue[i-1]-mainOutput[i-1])+Ki*error;
+            outputofPI[i]=kp*(setValue[i-1]-mainoutput[i-1])+ki*error;
         }
+        console.log("outputofPI : "+outputofPI[i]);
 
-        //计算前馈补偿
-        taoQianKui=floor(timeDelayOfQianKui/T);
-        if(i-1-taoQianKui<0)
+        //计算干扰项输入
+        if(i==0)
         {
-            if(i==taoQianKui)
-            {
-                QianKuiForinterfere[i]=-KOfQianKui/(1+2*TXOfWQianKui[0]/T)*
-                ((1+2*TYOfWQianKui[0]/T)*interfere[i-taoQianKui]);
-            }
-            else
-            {
-                QianKuiForinterfere[i]=0;
-            }
+            outputofWf[i]=0;
         }
-        else if(i-1-taoQianKui>=0)
+        else if((i-timeDelayofWf/T)<0)
         {
-            QianKuiForinterfere[i]=-KOfQianKui/(1+2*TXOfWQianKui[0]/T)*
-            ((1+2*TYOfWQianKui[0]/T)*interfere[i-taoQianKui]
-            +(1-2*TYOfWQianKui/T)*interfere[i-1-taoQianKui]
-            -(1-2*TXOfWQianKui/T)*QianKuiForinterfere[i-1-taoQianKui]);
+            outputofWf[i]=0;
         }
-
-        //计算输出值
-        taowo=timeDelayOfWo/T;
-        if(i<1+taowo)
+        else if((i-timeDelayofWf/T)==0)
         {
-            if(i>=taowo)
-            {
-                OutputOfWo[i]=1/(1+2*TYOfWo/T)*(Kofwo*(OutputOfControlPI[i-taowo1]+QianKuiForinterfere));
-            }
-            else
-            {
-                OutputOfWo[i]=0;
-            }
-            
+            outputofWf[i]=(1+2*TofWf/T)*(KofWf*(interfere[i-timeDelayofWf/T]));//此处存疑
         }
         else
         {
-            OutputOfWo[i]=1/(1+2*TYOfWo/T)*(KOfWo*(OutputOfControlPI[i-taowo]+OutputOfControlPI[i-1-taowo]
-                +QianKuiForinterfere[i-taowo]+QianKuiForinterfere[i-i-taowo])
-            -(1-2*TOfWo/T)*OutputOfWo1[i-1-taowo]);
-            
+            outputofWf[i]=1/(1+2*TofWf/T)*(KofWf*(interfere[i-timeDelayofWf/T]+interfere[i-1-timeDelayofWf/T])
+                -(1-2*TofWf/T)*outputofWf[i-1-timeDelayofWf/T]);
         }
 
-        taowf1=timeDelayOfWf1/T;
-        if(i<1+taowf1)
+        inputofWo[i]=outputofPI[i]+outputofWf[i];
+        //计算被控对象输出
+        if(i==0)
         {
-            if(i>=taowf1)
-            {
-                OutputOfWf1[i]=1/(1+2*TYOfWf1/T)*(KOfWf1*(interfere1[i-taowf1]));
-            }
-            else
-            {
-                OutputOfWf1[i]=0;
-            }
+            mainoutput[i]=0;
+        }
+        else if((i-timeDelayofWo/T)<0)
+        {
+            mainoutput[i]=0;
+        }
+        else if((i-timeDelayofWo/T)==0)
+        {
+            mainoutput[i]=(1+2*TofWo/T)*(KofWo*(inputofWo[i-timeDelayofWo/T]));//此处存疑
         }
         else
         {
-            OutputOfWf1[i]=1/(1+2*TYOfWf1/T)*(KOfWf1*(interfere1[i-taowf1]+interfere1[i-1-taowf1])
-            -(1-2*TYOfWf1/T)*OutputOfWf1[i-1-taowf1]);
+            mainoutput[i]=1/(1+2*TofWo/T)*(KofWo*(inputofWo[i-timeDelayofWo/T]+inputofWo[i-1-timeDelayofWo/T])
+                -(1-2*TofWo/T)*mainoutput[i-1-timeDelayofWo/T]);
         }
 
-        subOutput[i]=OutputOfWo1[i]+OutputOfWf1[i];
-        //计算主回路的输出值
-        taowo2=timeDelayOfWo2/T;
-        if(i<1+taowo2)
-        {
-            if(i>=taowo2)
-            {
-                OutputOfWo2[i]=1/(1+2*TYOfWo2/T)*(Kofwo2*(subOutput[i-taowo2]));
-            }
-            else
-            {
-                OutputOfWo2[i]=0;
-            }
-            
-        }
-        else
-        {
-            OutputOfWo2[i]=1/(1+2*TYOfWo2/T)*(KOfWo2*(subOutput[i-taowo2]+subOutput[i-1-taowo2])
-            -(1-2*TYOfWo2/T)*OutputOfWo2[i-1-taowo2]);
-            
-        }
+        error+=setValue[i]-mainoutput[i];
 
-        taowf2=timeDelayOfWf2/T;
-        if(i<1+taowf2)
-        {
-            if(i>=taowf2)
-            {
-                OutputOfWf2[i]=1/(1+2*TYOfWf2/T)*(KOfWf2*(interfere2[i-taowf2]));
-            }
-            else
-            {
-                OutputOfWf2[i]=0;
-            }
-        }
-        else
-        {
-            OutputOfWf2[i]=1/(1+2*TYOfWf2/T)*(KOfWf2*(interfere2[i]+interfere2[i-1-taowf2])
-            -(1-2*TYOfWf2/T)*OutputOfWf2[i-1-taowf2]);
-        }
-
-        mainOutput[i]=OutputOfWo2[i]+OutputOfWf2[i];
-//-------------------------------------------------------------------------------------------------        
-        /* 没有考虑时滞,暂时废弃
-        if(i-1<0)
-        {
-            OutputOfWo2[i]=1/(1+2*TYOfWo2/T)*(KOfWo2*(subOutput[i]));
-            outputofwf2[i]=1/(1+2*TYOfWf2/T)*(KOfWf2*(interfere2[i]));
-            mainOutput[i]=OutputOfWo2[i]+outputofwf2[i];
-        }
-        else
-        {
-            OutputOfWo2[i]=1/(1+2*TYOfWo2/T)*(KOfWo2*(subOutput[i]+subOutput[i-1])
-            -(1-2*TYOfWo2/T)*OutputOfWo2[i-1]);
-            outputofwf2[i]=1/(1+2*TYOfWf2/T)*(KOfWf2*(interfere2[i]+interfere2[i-1])
-            -(1-2*TYOfWf2/T)*outputofwf2[i-1]);
-            mainOutput[i]=OutputOfWo2[i]+outputofwf2[i];
-        }
-        */
-//-----------------------------------------------------------------------------------------------------
-        //改变两个积分项的差值,为下一次PI控制器计算做准备.
-        error1+=setValue[i]-mainOutput[i];
-        error2+=OutputOfControlPI1[i]+OutputOfWf1[i]-subOutput[i];
     }
 
-    //将数据进行输出
-    liangzi=new DataFormer(generate_RangeSeries(runningTime,T),mainOutput,subOutput,
-    OutputOfControlPI1,OutputOfControlPI2,OutputOfWf1,outputofwf2);
-    
-    return liangzi;
+    return mainoutput;
 }
 
-
 /*对数组进行初始化,返回该数组的函数*/
-function initArray(array,value)
+function initArray(lens,value)
 {
-    for (everyValue in array)
+    array=new Array(lens);
+    for (i=0;i<lens;i++)
     {
-        everyValue=value;
+        array[i]=value;
     }
     return array;
 }
 
-//类似于Python中的range方法
-function generate_RangeSeries(maxnumber,lengthOfArray)
-{
-    a=new Array;
-    per=maxnumber/lengthOfArray;
-    for(i=0;i<lengthOfArray;i++)
-    {
-        a.push(i*per);
-    }
-}
+var setpoint=1;
+var kp=1.9956;
+var ki=0.0195963675100431;
+var TofWo=100;
+var KofWo=1;
+var timeDelayofWo=0;
+var TofWf=10;
+var KofWf=1;
+var timeDelayofWf=0;
+var runningTime=500;
+var T=0.01;
 
-//输出格式确立
-function DataFormer(timeSeries,mainOutput,subOutput,OutputOfControlPI1,OutputOfControlPI2,
-    OutputOfWf1,OutputOfWf2)
-{
-    this.timeSeries=timeSeries;
+var interfere=new initArray(runningTime/T,1);
+var mainoutput=qiankui_FanKui(setpoint,kp,ki,TofWo,KofWo,timeDelayofWo,interfere,TofWf,KofWf,timeDelayofWf,runningTime);
 
-    this.mainOutput=mainOutput;
-    this.subOutput=subOutput;
-    
-    this.OutputOfControlPI1=OutputOfControlPI1;
-    this.OutputOfControlPI2=OutputOfControlPI2;
-    
-    this.OutputOfWf1=OutputOfWf1;
-    this.OutputOfWf2=outputofwf2;  
-};
+console.log(mainoutput);
+
+var fs = require('fs');
+let str=JSON.stringify(mainoutput,"","\t");
+fs.writeFile('反馈.json',str);
