@@ -286,6 +286,7 @@ function generate_RangeSeries(maxnumber,lengthOfArray)
     {
         a.push(i*per);
     }
+    return a;
 }
 
 //输出格式确立
