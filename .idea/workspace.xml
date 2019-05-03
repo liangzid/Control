@@ -10,6 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1e68672c-5db0-4ab1-91ba-a6f9b325660e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/ProcessingControl_WeChatProgramming/QianKui_ChuanJi2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProcessingControl_WeChatProgramming/QianKui_ChuanJi.js" beforeDir="false" afterPath="$PROJECT_DIR$/ProcessingControl_WeChatProgramming/QianKui_ChuanJi.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -24,11 +26,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ProcessingControl_WeChatProgramming/QianKui_ChuanJi.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="111" column="38" selection-start-line="111" selection-start-column="38" selection-end-line="111" selection-end-column="38" />
+            <state relative-caret-position="211">
+              <caret line="340" column="29" lean-forward="true" selection-start-line="340" selection-start-column="29" selection-end-line="340" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ProcessingControl_WeChatProgramming/QianKui_ChuanJi2.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="386">
+              <caret line="236" column="28" selection-start-line="236" selection-start-column="28" selection-end-line="236" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ProcessingControl_WeChatProgramming/data.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="461985">
+              <caret line="49990" column="23" lean-forward="true" selection-start-line="49990" selection-start-column="23" selection-end-line="49990" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -36,8 +56,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ProcessingControl_WeChatProgramming/QianKui_FanKui.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="241">
-              <caret line="111" column="20" lean-forward="true" selection-start-line="111" selection-start-column="20" selection-end-line="111" selection-end-column="20" />
+            <state relative-caret-position="270">
+              <caret line="88" column="5" lean-forward="true" selection-start-line="88" selection-start-column="5" selection-end-line="88" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -45,8 +65,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ProcessingControl_WeChatProgramming/QianKui_qiankui.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="116">
-              <caret line="123" column="13" selection-start-line="123" selection-start-column="13" selection-end-line="123" selection-end-column="13" />
+            <state relative-caret-position="165">
+              <caret line="77" column="9" lean-forward="true" selection-start-line="69" selection-start-column="8" selection-end-line="86" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -94,6 +114,7 @@
         <option value="$PROJECT_DIR$/ProcessingControl_WeChatProgramming/readData.js" />
         <option value="$PROJECT_DIR$/ProcessingControl_WeChatProgramming/QianKui_FanKui.js" />
         <option value="$PROJECT_DIR$/ProcessingControl_WeChatProgramming/QianKui_ChuanJi.js" />
+        <option value="$PROJECT_DIR$/ProcessingControl_WeChatProgramming/QianKui_ChuanJi2.js" />
       </list>
     </option>
   </component>
@@ -157,7 +178,10 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.QianKui_FanKui.js">
+  <component name="RunManager" selected="Node.js.QianKui_ChuanJi2.js">
+    <configuration name="QianKui_ChuanJi2.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="QianKui_ChuanJi2.js" working-dir="$PROJECT_DIR$/ProcessingControl_WeChatProgramming">
+      <method v="2" />
+    </configuration>
     <configuration name="QianKui_ChuanJi.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="QianKui_ChuanJi.js" working-dir="$PROJECT_DIR$/ProcessingControl_WeChatProgramming">
       <method v="2" />
     </configuration>
@@ -172,10 +196,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Node.js.QianKui_ChuanJi2.js" />
+        <item itemvalue="Node.js.QianKui_ChuanJi.js" />
         <item itemvalue="Node.js.QianKui_FanKui.js" />
         <item itemvalue="Node.js.readData.js" />
         <item itemvalue="Node.js.QianKui_qiankui.js" />
-        <item itemvalue="Node.js.QianKui_ChuanJi.js" />
       </list>
     </recent_temporary>
   </component>
@@ -194,23 +219,24 @@
       <workItem from="1556715516933" duration="767000" />
       <workItem from="1556780524368" duration="1980000" />
       <workItem from="1556807131237" duration="3775000" />
-      <workItem from="1556850285869" duration="11429000" />
+      <workItem from="1556850285869" duration="12450000" />
+      <workItem from="1556870835044" duration="4418000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23259000" />
+    <option name="totallyTimeSpent" value="28698000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1366" height="706" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4972826" visible="true" weight="0.24888226" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4972826" visible="true" weight="0.24888226" />
       <window_info id="Structure" order="1" sideWeight="0.5027174" side_tool="true" weight="0.24888226" />
       <window_info id="Favorites" order="2" sideWeight="0.5027174" side_tool="true" weight="0.24888226" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.08650519" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.060553633" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -299,13 +325,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ProcessingControl_WeChatProgramming/data.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="1021" column="33" lean-forward="true" selection-start-line="1021" selection-start-column="33" selection-end-line="1021" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ProcessingControl_WeChatProgramming/test.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -316,20 +335,8 @@
     <entry file="file://$PROJECT_DIR$/ProcessingControl_WeChatProgramming/BasicTools.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/ProcessingControl_WeChatProgramming/前馈反馈.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="27691" column="24" lean-forward="true" selection-start-line="27691" selection-start-column="24" selection-end-line="27691" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ProcessingControl_WeChatProgramming/反馈.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-672053">
-          <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/ProcessingControl_WeChatProgramming/前馈反馈.json" />
+    <entry file="file://$PROJECT_DIR$/ProcessingControl_WeChatProgramming/反馈.json" />
     <entry file="file://$PROJECT_DIR$/ProcessingControl_WeChatProgramming/readData.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -337,24 +344,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ProcessingControl_WeChatProgramming/QianKui_qiankui.js">
+    <entry file="file://$PROJECT_DIR$/ProcessingControl_WeChatProgramming/data.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
-          <caret line="123" column="13" selection-start-line="123" selection-start-column="13" selection-end-line="123" selection-end-column="13" />
+        <state relative-caret-position="461985">
+          <caret line="49990" column="23" lean-forward="true" selection-start-line="49990" selection-start-column="23" selection-end-line="49990" selection-end-column="23" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ProcessingControl_WeChatProgramming/QianKui_FanKui.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="111" column="20" lean-forward="true" selection-start-line="111" selection-start-column="20" selection-end-line="111" selection-end-column="20" />
+        <state relative-caret-position="270">
+          <caret line="88" column="5" lean-forward="true" selection-start-line="88" selection-start-column="5" selection-end-line="88" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ProcessingControl_WeChatProgramming/QianKui_qiankui.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="77" column="9" lean-forward="true" selection-start-line="69" selection-start-column="8" selection-end-line="86" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ProcessingControl_WeChatProgramming/QianKui_ChuanJi.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="111" column="38" selection-start-line="111" selection-start-column="38" selection-end-line="111" selection-end-column="38" />
+        <state relative-caret-position="211">
+          <caret line="340" column="29" lean-forward="true" selection-start-line="340" selection-start-column="29" selection-end-line="340" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ProcessingControl_WeChatProgramming/QianKui_ChuanJi2.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="386">
+          <caret line="236" column="28" selection-start-line="236" selection-start-column="28" selection-end-line="236" selection-end-column="28" />
         </state>
       </provider>
     </entry>

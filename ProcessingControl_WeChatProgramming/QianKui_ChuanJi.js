@@ -30,10 +30,10 @@
  ***********************************************************************************/ 
  function qianKui_ChuanJi(setpoint,Kp1,Ki1,TYOfWQianKui,TXOfWQianKui,KOfQianKui,timeDelayOfQianKui,
     Kp2,Ki2,TYOfWo1,KOfWo1,timeDelayOfWo1,interfere1,TYOfWf1,KOfWf1,timeDelayOfWf1,TYOfWo2,KOfWo2,
-    timeDelayOfWo2,interfere2,TYOfWf2,KOfWf2,timeDelayOfWf2,runningTime,isUseModelingInaccurate)
+    timeDelayOfWo2,interfere2,TYOfWf2,KOfWf2,timeDelayOfWf2,runningTime,T,isUseModelingInaccurate)
 {
     //超参设置
-    var T=0.01;//采样时间,这个就默认吧.
+    //var T=0.01;//采样时间,这个就默认吧.
     
     //输入输出与状态变量初始化
     var setValue  =initArray(runningTime/T,setpoint);//用给定值来初始化输入
@@ -91,7 +91,7 @@
         *******************************************************************/
         //计算前馈补偿
         var taoQianKui=~~(timeDelayOfQianKui/T);
-        console.log("taoqiankui:"+taoQianKui);
+        //console.log("taoqiankui:"+taoQianKui);
         if(i-1-taoQianKui<0)
         {
             if(i==taoQianKui)
@@ -106,8 +106,7 @@
         }
         else if(i-1-taoQianKui>=0)
         {
-            console.log(-(1-2*TXOfWQianKui/T)*QianKuiForinterfere1[i-1-taoQianKui]
-                );
+            //console.log(-(1-2*TXOfWQianKui/T)*QianKuiForinterfere1[i-1-taoQianKui]);
 
             QianKuiForinterfere1[i]=(-KOfQianKui/(1+(2*TXOfWQianKui/T)))*
             ((1+2*TYOfWQianKui/T)*interfere1[i-taoQianKui]
@@ -116,8 +115,8 @@
         }
 
         //console.log("----------:"+KOfQianKui+TXOfWQianKui+TYOfWQianKui);
-        console.log("interfere1:"+interfere1[i]);
-        console.log("qiankuiforinterfere1:"+QianKuiForinterfere1[i]);
+        //console.log("interfere1:"+interfere1[i]);
+        //console.log("qiankuiforinterfere1:"+QianKuiForinterfere1[i]);
 
         //副回路控制器输出
         if(i-1<0)
@@ -129,7 +128,7 @@
             OutputOfControlPI2[i]=Kp2*(OutputOfControlPI1[i-1]+QianKuiForinterfere1[i-1]-subOutput[i-1])
             +Ki2*error2;
         }
-        console.log("=====outputofcontrolpi1:"+OutputOfControlPI1[i]);
+        //console.log("=====outputofcontrolpi1:"+OutputOfControlPI1[i]);
 
 
 
@@ -155,7 +154,7 @@
             -(1-2*TYOfWo1/T)*OutputOfWo1[i-1-taowo1]);
             
         }
-        console.log("outputofcontrolpi2:"+OutputOfControlPI2[i]);
+        //console.log("outputofcontrolpi2:"+OutputOfControlPI2[i]);
         //console.log("outputofwo1:"+OutputOfWo1);
 
 
@@ -178,16 +177,16 @@
             -(1-2*TYOfWf1/T)*OutputOfWf1[i-1-taowf1]);
         }
 
-        console.log("outputofwo1:"+OutputOfWo1[i]);
-        console.log("outputofwf1:"+OutputOfWf1[i]);
+        //console.log("outputofwo1:"+OutputOfWo1[i]);
+        //console.log("outputofwf1:"+OutputOfWf1[i]);
 
 
         subOutput[i]=OutputOfWo1[i]+OutputOfWf1[i];
 
-        console.log("suboutput:"+subOutput[i]);
+        //console.log("suboutput:"+subOutput[i]);
         //计算主回路的输出值
         var taowo2=~~(timeDelayOfWo2/T);
-        console.log("taowo2:"+taowo2);
+        //console.log("taowo2:"+taowo2);
         if(i<1+taowo2)
         {
             if(i>=taowo2)
@@ -230,10 +229,10 @@
             -(1-2*TYOfWf2/T)*OutputOfWf2[i-1-taowf2]);
         }
 
-        console.log('Outputofwo2:'+OutputOfWo2[i]);
+        //console.log('Outputofwo2:'+OutputOfWo2[i]);
         //console.log('outputofwf2:'+OutputOfWf2[i]);
         mainOutput[i]=OutputOfWo2[i]+OutputOfWf2[i];
-        console.log("mainoutput:"+mainOutput[i]);
+        //console.log("mainoutput:"+mainOutput[i]);
 //-------------------------------------------------------------------------------------------------        
         /* 没有考虑时滞,暂时废弃
         if(i-1<0)
@@ -261,7 +260,7 @@
     liangzi=new DataFormer(generate_RangeSeries(runningTime,T),mainOutput,subOutput,
     OutputOfControlPI1,OutputOfControlPI2,OutputOfWf1,OutputOfWf2);
     
-    return liangzi;
+    return mainOutput;
     //return OutputOfControlPI1;
 }
 
@@ -311,9 +310,9 @@ var Kp1=2.17;
 var Ki1=0.015585;
 var TYOfWQianKui=0;
 var TXOfWQianKui=0;
-var KOfQianKui=5;
+var KOfQianKui=1;
 var timeDelayOfQianKui=0;
-var Kp2=0.369;
+var Kp2=10;
 var Ki2=0;
 var TYOfWo1=30;
 var KOfWo1=1;
@@ -323,7 +322,7 @@ var TYOfWf1=0;
 var KOfWf1=0;
 var timeDelayOfWf1=0;
 
-var TYOfWo2=100;
+var TYOfWo2=50;
 var KOfWo2=1;
 var timeDelayOfWo2=0;
 
@@ -331,7 +330,7 @@ var TYOfWf2=0;
 var KOfWf2=0;
 var timeDelayOfWf2=0;
 
-var runningTime=5;
+var runningTime=500;
 var isUseModelingInaccurate=0;
 var T=0.01
 
@@ -340,14 +339,14 @@ var interfere2=initArray(interfere1.length,1);
 //console.log(interfere1[0]);
 
 var isUseModelingInaccurat=0;
-liangzi=qianKui_ChuanJi(setpoint,Kp1,Ki1,TYOfWQianKui,TXOfWQianKui,KOfQianKui,timeDelayOfQianKui,
+mainOutput=qianKui_ChuanJi(setpoint,Kp1,Ki1,TYOfWQianKui,TXOfWQianKui,KOfQianKui,timeDelayOfQianKui,
     Kp2,Ki2,TYOfWo1,KOfWo1,timeDelayOfWo1,interfere1,TYOfWf1,KOfWf1,timeDelayOfWf1,TYOfWo2,KOfWo2,
-    timeDelayOfWo2,interfere2,TYOfWf2,KOfWf2,timeDelayOfWf2,runningTime,isUseModelingInaccurat);
+    timeDelayOfWo2,interfere2,TYOfWf2,KOfWf2,timeDelayOfWf2,runningTime,T,isUseModelingInaccurat);
 
 //liangzi2="...";
 
-//console.log(liangzi.mainOutput)
+console.log(mainOutput)
 
 var fs = require('fs');
-let str=JSON.stringify(liangzi,"","\t");
+let str=JSON.stringify(mainOutput,"","\t");
 fs.writeFile('data.json',str);
