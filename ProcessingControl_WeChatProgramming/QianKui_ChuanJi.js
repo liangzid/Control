@@ -109,7 +109,7 @@
             console.log(-(1-2*TXOfWQianKui/T)*QianKuiForinterfere1[i-1-taoQianKui]
                 );
 
-            QianKuiForinterfere1[i]=(KOfQianKui/(1+(2*TXOfWQianKui/T)))*
+            QianKuiForinterfere1[i]=(-KOfQianKui/(1+(2*TXOfWQianKui/T)))*
             ((1+2*TYOfWQianKui/T)*interfere1[i-taoQianKui]
             +(1-2*TYOfWQianKui/T)*interfere1[i-1-taoQianKui]
             -(1-2*TXOfWQianKui/T)*QianKuiForinterfere1[i-1-taoQianKui]);
